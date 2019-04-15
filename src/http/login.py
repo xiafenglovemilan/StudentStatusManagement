@@ -26,7 +26,7 @@ async def login(request):
             session['name'] = data['name']
             session['pass_wd'] = data['pass_wd']
         else:
-            result['code'] = 500
+            result['code'] = 502
             result['msg'] = "Incorrect user name or password"
             result['data'] = {}
     return web.json_response(result)
