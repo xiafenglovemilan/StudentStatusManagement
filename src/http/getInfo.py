@@ -17,5 +17,3 @@ async def get_user_info(request):
         "data": user_info
     }
     return web.json_response(result)
-
-async
