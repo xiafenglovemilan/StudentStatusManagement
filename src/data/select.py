@@ -19,8 +19,8 @@ class SelectData(object):
         return pass_wd
 
     def select_user_info(self):
-        sql = 'select a.name, b.describe type, a.college, a.sex, a.age, a.major, a.class, a.birthday ' \
-                'from user a join userType b where a.name = "%s" and a.typeId = b.id' % self.__params
+        sql = 'select name, typeId, college, sex, age, major, class, birthday ' \
+                'from user where name = "%s" ' % self.__params
         print(sql)
         result = self.__cursor.execute(sql)
         user_info = {}
