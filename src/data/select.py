@@ -15,7 +15,7 @@ class SelectData(object):
         self.__conn.close()
 
     def select_password(self):
-        result = self.__cursor.execute('select passwd from user where studentId = "%s"' % self.__params)
+        result = self.__cursor.execute('select passwd from user where userId = "%s"' % self.__params)
         pass_wd = ""
         for row in result:
             pass_wd = row[0]
@@ -24,7 +24,7 @@ class SelectData(object):
     def select_user_info(self):
         sql = 'select studentId, name, formerName, idNo, typeId, sex, age, classId, birthday, ' \
               'national, nativePlace, politicalLandscape, admissionDate, mail, schoolYear, memo ' \
-              'from user where studentId = "%s" ' % self.__params
+              'from user where userId = "%s" ' % self.__params
         result = self.__cursor.execute(sql)
         user_info = {}
         for row in result:
