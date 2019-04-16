@@ -49,27 +49,47 @@ class SelectData(object):
     def select_user_type(self):
         result = self.__cursor.execute('select * from userType')
         data = {}
+        user_type = []
         for row in result:
-            data[row[0]] = row[1]
+            line_data = {}
+            line_data['id'] = row[0]
+            line_data['describe'] = row[1]
+            user_type.append(line_data)
+        data['result'] = user_type
         return data
 
     def select_departments(self):
         result = self.__cursor.execute('select * from departments')
         data = {}
+        departments = []
         for row in result:
-            data[row[0]] = row[1]
+            line_data = {}
+            line_data['id'] = row[0]
+            line_data['describe'] = row[1]
+            departments.append(line_data)
+        data['result'] = departments
         return data
 
     def select_professional(self):
         result = self.__cursor.execute('select id, describe from professional where departId = "%s"' % self.__params)
         data = {}
+        professional = []
         for row in result:
-            data[row[0]] = row[1]
+            line_data = {}
+            line_data['id'] = row[0]
+            line_data['describe'] = row[1]
+            professional.append(line_data)
+        data['result'] = professional
         return data
 
     def select_class(self):
         result = self.__cursor.execute('select id, describe from class where professId = "%s"' % self.__params)
         data = {}
+        classes = []
         for row in result:
-            data[row[0]] = row[1]
+            line_data = {}
+            line_data['id'] = row[0]
+            line_data['describe'] = row[1]
+            classes.append(line_data)
+        data['result'] = classes
         return data
