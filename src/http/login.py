@@ -10,20 +10,20 @@ async def login(request):
     data = await request.json()
     session = await get_session(request)
     result = {}
-    session_name = session['studentId'] if 'studentId' in session else None
+    session_name = session['userId'] if 'userId' in session else None
     session_password = session['pass_wd'] if 'pass_wd' in session else None
-    if data['pass_wd'] == session_password and data['studentId'] == session_name:
+    if data['pass_wd'] == session_password and data['userId'] == session_name:
         result['code'] = 501
         result['msg'] = "User logged in"
         result['data'] = {}
     else:
-        sel_obj = select.SelectData(data['studentId'])
+        sel_obj = select.SelectData(data['userId'])
         pass_wd = sel_obj.select_password()
         if pass_wd == data['pass_wd']:
             result['code'] = 200
             result['msg'] = "OK"
             result['data'] = {}
-            session['studentId'] = data['studentId']
+            session['userId'] = data['userId']
             session['pass_wd'] = data['pass_wd']
         else:
             result['code'] = 502
