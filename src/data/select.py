@@ -93,3 +93,15 @@ class SelectData(object):
             classes.append(line_data)
         data['result'] = classes
         return data
+
+    def select_semester(self):
+        result = self.__cursor.execute('select id, describe from semester')
+        data = {}
+        semester = []
+        for row in result:
+            line_data = {}
+            line_data['id'] = row[0]
+            line_data['describe'] = row[1]
+            semester.append(line_data)
+        data['result'] = semester
+        return data
