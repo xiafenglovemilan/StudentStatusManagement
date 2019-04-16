@@ -7,7 +7,7 @@ routes = web.RouteTableDef()
 @routes.post('/add/member_info')
 async def add_member_info(request):
     session = await get_session(request)
-    session_name = session['studentId'] if 'studentId' in session else None
+    session_name = session['userId'] if 'userId' in session else None
     data = await request.json()
     if session_name:
         insert_obj = insert.InsertData(data)

@@ -1,5 +1,4 @@
 import sqlite3
-from typing import Dict, Any
 
 from src import config
 
@@ -22,13 +21,13 @@ class SelectData(object):
         return pass_wd
 
     def select_user_info(self):
-        sql = 'select studentId, name, formerName, idNo, typeId, sex, age, classId, birthday, ' \
+        sql = 'select userId, name, formerName, idNo, typeId, sex, age, classId, birthday, ' \
               'national, nativePlace, politicalLandscape, admissionDate, mail, schoolYear, memo ' \
               'from user where userId = "%s" ' % self.__params
         result = self.__cursor.execute(sql)
         user_info = {}
         for row in result:
-            user_info['studentId'] = row[0]
+            user_info['userId'] = row[0]
             user_info['name'] = row[1]
             user_info['formerName'] = row[2]
             user_info['idNo'] = row[3]

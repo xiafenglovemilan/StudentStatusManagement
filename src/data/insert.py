@@ -14,11 +14,11 @@ class InsertData(object):
         self.__conn.close()
 
     def add_member_info(self):
-        sql = 'insert into user (studentId, name, passwd, formerName, idNo, typeId, sex, age, classId, birthday, ' \
+        sql = 'insert into user (userId, name, passwd, formerName, idNo, typeId, sex, age, classId, birthday, ' \
             'national, nativePlace, politicalLandscape, admissionDate, mail, schoolYear, memo) ' \
                 'values ("{0}", "{1}", "{2}", "{3}", "{4}", "{5}", "{6}", ' \
               '"{7}", "{8}", "{9}", "{10}", "{11}", "{12}", "{13}", "{14}", "{15}", "{16}")'.format( \
-            self.__params['studentId'], self.__params['name'], self.__params['passwd'], self.__params['formerName'], \
+            self.__params['userId'], self.__params['name'], self.__params['passwd'], self.__params['formerName'], \
             self.__params['idNo'], self.__params['typeId'], self.__params['sex'], self.__params['age'], self.__params['classId'], \
             self.__params['birthday'], self.__params['national'], self.__params['nativePlace'], self.__params['politicalLandscape'], \
             self.__params['admissionDate'], self.__params['mail'], self.__params['schoolYear'], self.__params['memo'] )
