@@ -126,3 +126,23 @@ async def get_semester(request):
             "data": {}
         }
     return web.json_response(result)
+
+@routes.post('/get/course')
+async def get_course(request):
+    session = await get_session(request)
+    session_name = session['userId'] if 'userId' in session else None
+    if session_name:
+        sel_obj = select.SelectData()
+        course = sel_obj.select_course()
+        result = {
+            "code": 200,
+            "msg": "OK",
+            "data": course
+        }
+    else:
+        result = {
+            "code": 503,
+            "msg": "Not logged in",
+            "data": {}
+        }
+    return web.json_response(result)

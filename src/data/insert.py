@@ -27,3 +27,30 @@ class InsertData(object):
             return True
         else:
             return False
+
+    def add_departments(self):
+        sql = 'insert into departments (describe) values ("{0}")'.format(self.__params['describe'])
+        result = self.__cursor.execute(sql)
+        if result.rowcount > 0:
+            return True
+        else:
+            return False
+
+    def add_professional(self):
+        sql = 'insert into professional (describe, departId) values ("{0}", "{1}")'.format( \
+            self.__params['describe'], self.__params['departId'])
+        result = self.__cursor.execute(sql)
+        if result.rowcount > 0:
+            return True
+        else:
+            return False
+
+    def add_class(self):
+        sql = 'insert into class (describe, professId) values ("{0}", "{1}")'.format( \
+            self.__params['describe'], self.__params['professId'])
+        result = self.__cursor.execute(sql)
+        if result.rowcount > 0:
+            return True
+        else:
+            return False
+
