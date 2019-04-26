@@ -24,9 +24,15 @@ class InsertData(object):
             self.__params['mail'], self.__params['schoolYear'], self.__params['memo'], self.__params['typeId'] )
         result = self.__cursor.execute(sql)
         if result.rowcount > 0:
-            return True
+            self.__conn.commit()
+            sql = 'select max(userId) from user where typeId = "{0}"'.format(self.__params['typeId'])
+            result = self.__cursor.execute(sql)
+            data = {}
+            for row in result:
+                data['userId'] = row[0]
+            return data
         else:
-            return False
+            return {}
 
     def add_departments(self):
         sql = 'insert into departments (describe) values ("{0}")'.format(self.__params['describe'])

@@ -11,12 +11,12 @@ async def add_member_info(request):
     data = await request.json()
     if session_name:
         insert_obj = insert.InsertData(data)
-        is_success = insert_obj.add_member_info()
-        if is_success:
+        data = insert_obj.add_member_info()
+        if 'userId' in data:
             result = {
                 "code": 200,
                 "msg": "OK",
-                "data": {}
+                "data": data
             }
         else:
             result = {
