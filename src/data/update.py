@@ -26,3 +26,11 @@ class UpdateData(object):
             return True
         else:
             return False
+
+    def update_password(self):
+        sql = 'update user set passwd = "{0}" where userId = "{1}"'.format(self.__params['passwd'], self.__params['userId'])
+        result = self.__cursor.execute(sql)
+        if result.rowcount > 0:
+            return True
+        else:
+            return False
