@@ -9,8 +9,12 @@ routes = web.RouteTableDef()
 async def get_user_info(request):
     session = await get_session(request)
     session_name = session['userId'] if 'userId' in session else None
+    data = await request.json()
     if session_name:
-        sel_obj = select.SelectData(params=session_name)
+        if 'userId' in data:
+            sel_obj = select.SelectData(params=data['userId'])
+        else:
+            sel_obj = select.SelectData(params=session_name)
         user_info = sel_obj.select_user_info()
         result = {
             "code": 200,
