@@ -20,6 +20,32 @@ class SelectData(object):
             pass_wd = row[0]
         return pass_wd
 
+    def select_search_info(self):
+        sql = ''
+        if 'classId' in self.__params:
+            sql = 'select a.userId, a.name, a.formerName, b.describe as typeName from user as a, userType as b ' \
+                  'where a.typeId = b.id and a.classId = "{0}"'.format(self.__params['classId'])
+        elif 'userId' in self.__params:
+            sql = 'select a.userId, a.name, a.formerName, b.describe as typeName from user as a, userType as b ' \
+                  'where a.typeId = b.id and a.userId = "{0}"'.format(self.__params['userId'])
+        elif 'name' in self.__params:
+            sql = 'select a.userId, a.name, a.formerName, b.describe as typeName from user as a, userType as b ' \
+                  'where a.typeId = b.id and a.name like "%{0}%"'.format(self.__params['name'])
+        else:
+            return {}
+        result = self.__cursor.execute(sql)
+        data = {}
+        search_info = []
+        for row in result:
+            line_data = {}
+            line_data['userId'] = row[0]
+            line_data['name'] = row[1]
+            line_data['formerName'] = row[2]
+            line_data['typeName'] = row[3]
+            search_info.append(line_data)
+        data['result'] = search_info
+        return data
+
     def select_user_info(self):
         sql = 'select userId, name, formerName, idNo, typeId, sex, age, classId, birthday, ' \
               'national, nativePlace, politicalLandscape, admissionDate, mail, schoolYear, memo ' \
