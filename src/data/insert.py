@@ -60,3 +60,12 @@ class InsertData(object):
         else:
             return False
 
+    def add_course_table(self):
+        sql = 'insert into courseTable (classTimeId, userId, courseId, classId, semesterId) values("{0}", "{1}", "{2}", "{3}", "{4}")'
+        for row in self.__params:
+            sql_format = sql.format(row['classTimeId'], row['userId'], row['courseId'], row['classId'], row['semesterId'])
+            result = self.__cursor.execute(sql_format)
+            self.__conn.commit()
+            if result.rowcount <= 0:
+                return False
+        return True

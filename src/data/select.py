@@ -142,3 +142,18 @@ class SelectData(object):
             course.append(line_data)
         data['result'] = course
         return data
+
+    def select_course_table(self):
+        sql = 'select classTimeId, userId, courseId from courseTable where classId = "{0}" and semesterId = "{1}"'
+        sql_format = sql.format(self.__params['classId'], self.__params['semesterId'])
+        result = self.__cursor.execute(sql_format)
+        data = {}
+        course_table = []
+        for row in result:
+            line_data = {}
+            line_data['classTimeId'] = row[0]
+            line_data['userId'] = row[1]
+            line_data['courseId'] = row[2]
+            course_table.append(line_data)
+        data['result'] = course_table
+        return data
