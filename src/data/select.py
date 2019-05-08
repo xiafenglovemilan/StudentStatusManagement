@@ -21,7 +21,6 @@ class SelectData(object):
         return pass_wd
 
     def select_search_info(self):
-        sql = ''
         if 'classId' in self.__params:
             sql = 'select a.userId, a.name, a.formerName, b.describe as typeName from user as a, userType as b ' \
                   'where a.typeId = b.id and a.classId = "{0}"'.format(self.__params['classId'])
@@ -144,7 +143,9 @@ class SelectData(object):
         return data
 
     def select_course_table(self):
-        sql = 'select classTimeId, userId, courseId from courseTable where classId = "{0}" and semesterId = "{1}"'
+        sql = 'select a.classTimeId, a.userId, b.name, a.courseId, c.describe courseName ' \
+              'from courseTable a, user b, course c where a.userId = b.userId '\
+              'and a.courseId = c.id and a.classId = {0} and a.semesterId = {1}'
         sql_format = sql.format(self.__params['classId'], self.__params['semesterId'])
         result = self.__cursor.execute(sql_format)
         data = {}
@@ -153,7 +154,9 @@ class SelectData(object):
             line_data = {}
             line_data['classTimeId'] = row[0]
             line_data['userId'] = row[1]
-            line_data['courseId'] = row[2]
+            line_data['name'] = row[2]
+            line_data['courseId'] = row[3]
+            line_data['courseName'] = row[4]
             course_table.append(line_data)
         data['result'] = course_table
         return data
