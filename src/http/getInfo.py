@@ -192,3 +192,23 @@ async def get_course_table(request):
             "data": {}
         }
     return web.json_response(result)
+
+@routes.post('/get/teacher_list')
+async def get_teacher_list(request):
+    session = await get_session(request)
+    session_name = session['userId'] if 'userId' in session else None
+    if session_name:
+        sel_obj = select.SelectData()
+        teacher_list = sel_obj.select_teacher_list()
+        result = {
+            "code": 200,
+            "msg": "OK",
+            "data": teacher_list
+        }
+    else:
+        result = {
+            "code": 503,
+            "msg": "Not logged in",
+            "data": {}
+        }
+    return web.json_response(result)

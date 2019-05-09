@@ -160,3 +160,16 @@ class SelectData(object):
             course_table.append(line_data)
         data['result'] = course_table
         return data
+
+    def select_teacher_list(self):
+        sql = 'select userId, name from user where typeId = 3'
+        result = self.__cursor.execute(sql)
+        data = {}
+        teacher_list = []
+        for row in result:
+            line_data = {}
+            line_data['userId'] = row[0]
+            line_data['name'] = row[1]
+            teacher_list.append(line_data)
+        data['result'] = teacher_list
+        return data
