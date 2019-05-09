@@ -69,3 +69,11 @@ class InsertData(object):
             if result.rowcount <= 0:
                 return False
         return True
+
+    def add_course(self):
+        sql = 'insert into course (describe) values ("{0}")'.format(self.__params['describe'])
+        result = self.__cursor.execute(sql)
+        if result.rowcount > 0:
+            return True
+        else:
+            return False

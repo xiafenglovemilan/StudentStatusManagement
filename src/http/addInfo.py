@@ -143,3 +143,31 @@ async def add_course_table(request):
             "data": {}
         }
     return web.json_response(result)
+
+@routes.post('/add/course')
+async def add_course(request):
+    session = await get_session(request)
+    session_name = session['userId'] if 'userId' in session else None
+    data = await request.json()
+    if session_name:
+        insert_obj = insert.InsertData(data)
+        is_success = insert_obj.add_course()
+        if is_success:
+            result = {
+                "code": 200,
+                "msg": "OK",
+                "data": {}
+            }
+        else:
+            result = {
+                "code": 504,
+                "msg": "Failed to add data",
+                "data": {}
+            }
+    else:
+        result = {
+            "code": 503,
+            "msg": "Not logged in",
+            "data": {}
+        }
+    return web.json_response(result)
