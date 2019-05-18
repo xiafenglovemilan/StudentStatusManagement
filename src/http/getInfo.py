@@ -194,17 +194,59 @@ async def get_course_table(request):
     return web.json_response(result)
 
 @routes.post('/get/user_list')
-async def get_teacher_list(request):
+async def get_user_list(request):
     session = await get_session(request)
     session_name = session['userId'] if 'userId' in session else None
     data = await request.json()
     if session_name:
         sel_obj = select.SelectData(params=data)
-        teacher_list = sel_obj.select_user_list()
+        user_list = sel_obj.select_user_list()
         result = {
             "code": 200,
             "msg": "OK",
-            "data": teacher_list
+            "data": user_list
+        }
+    else:
+        result = {
+            "code": 503,
+            "msg": "Not logged in",
+            "data": {}
+        }
+    return web.json_response(result)
+
+@routes.post('/get/user_grade')
+async def get_user_grade(request):
+    session = await get_session(request)
+    session_name = session['userId'] if 'userId' in session else None
+    data = await request.json()
+    if session_name:
+        sel_obj = select.SelectData(params=data)
+        student_grade = sel_obj.select_student_grade()
+        result = {
+            "code": 200,
+            "msg": "OK",
+            "data": student_grade
+        }
+    else:
+        result = {
+            "code": 503,
+            "msg": "Not logged in",
+            "data": {}
+        }
+    return web.json_response(result)
+
+@routes.post('/get/course_grade')
+async def get_course_grade(request):
+    session = await get_session(request)
+    session_name = session['userId'] if 'userId' in session else None
+    data = await request.json()
+    if session_name:
+        sel_obj = select.SelectData(params=data)
+        course_grade = sel_obj.select_course_grade()
+        result = {
+            "code": 200,
+            "msg": "OK",
+            "data": course_grade
         }
     else:
         result = {

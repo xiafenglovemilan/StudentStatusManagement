@@ -168,11 +168,42 @@ class SelectData(object):
         sql_format = sql.format(self.__params['typeId'])
         result = self.__cursor.execute(sql_format)
         data = {}
-        teacher_list = []
+        user_list = []
         for row in result:
             line_data = {}
             line_data['userId'] = row[0]
             line_data['name'] = row[1]
-            teacher_list.append(line_data)
-        data['result'] = teacher_list
+            user_list.append(line_data)
+        data['result'] = user_list
+        return data
+
+    def select_student_grade(self):
+        sql = 'select c.describe courseName, g.grade from grade g, course c '\
+              'where g.userId = "{0}" and g.courseId = c.id and g.semesterId = "{1}"'
+        sql_format = sql.format(self.__params['userId'], self.__params['semesterId'])
+        result = self.__cursor.execute(sql_format)
+        data = {}
+        student_grade = []
+        for row in result:
+            line_data = {}
+            line_data['courseName'] = row[0]
+            line_data['grade'] = row[1]
+            student_grade.append(line_data)
+        data['result'] = student_grade
+        return data
+
+    def select_course_grade(self):
+        sql = 'select u.userId, u.name, g.grade from grade g, user u where g.userId = u.userId '\
+              'and u.classId = "{0}" and g.courseId = "{1}" and g.semesterId = "{2}"'
+        sql_format = sql.format(self.__params['classId'], self.__params['courseId'], self.__params['semesterId'])
+        result = self.__cursor.execute(sql_format)
+        data = {}
+        course_grade = []
+        for row in result:
+            line_data = {}
+            line_data['userId'] = row[0]
+            line_data['name'] = row[1]
+            line_data['grade'] = row[2]
+            course_grade.append(line_data)
+        data['result'] = course_grade
         return data

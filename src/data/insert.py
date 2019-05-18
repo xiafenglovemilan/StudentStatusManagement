@@ -77,3 +77,13 @@ class InsertData(object):
             return True
         else:
             return False
+
+    def add_student_grade(self):
+        sql = 'insert into grade(userId, courseId, grade, semesterId) values ("{0}", "{1}", "{2}", "{3}")'
+        for row in self.__params:
+            sql_format = sql.format(row['userId'], row['courseId'], row['grade'], row['semesterId'])
+            result = self.__cursor.execute(sql_format)
+            self.__conn.commit()
+            if result.rowcount <= 0:
+                return False
+        return True
