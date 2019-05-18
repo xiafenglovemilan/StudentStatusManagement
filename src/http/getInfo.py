@@ -193,13 +193,14 @@ async def get_course_table(request):
         }
     return web.json_response(result)
 
-@routes.post('/get/teacher_list')
+@routes.post('/get/user_list')
 async def get_teacher_list(request):
     session = await get_session(request)
     session_name = session['userId'] if 'userId' in session else None
+    data = await request.json()
     if session_name:
-        sel_obj = select.SelectData()
-        teacher_list = sel_obj.select_teacher_list()
+        sel_obj = select.SelectData(params=data)
+        teacher_list = sel_obj.select_user_list()
         result = {
             "code": 200,
             "msg": "OK",

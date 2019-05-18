@@ -161,9 +161,12 @@ class SelectData(object):
         data['result'] = course_table
         return data
 
-    def select_teacher_list(self):
-        sql = 'select userId, name from user where typeId = 3'
-        result = self.__cursor.execute(sql)
+    def select_user_list(self):
+        sql = 'select userId, name from user where typeId = "{0}"'
+        if 'classId' in self.__params:
+            sql += 'and classId = "{0}"'.format(self.__params['classId'])
+        sql_format = sql.format(self.__params['typeId'])
+        result = self.__cursor.execute(sql_format)
         data = {}
         teacher_list = []
         for row in result:
