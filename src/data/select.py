@@ -222,3 +222,18 @@ class SelectData(object):
             course_grade.append(line_data)
         data['result'] = course_grade
         return data
+
+    def select_teacher_class_course(self):
+        sql = 'select distinct a.courseId, b.describe courseName from courseTable a, course b '\
+              'where a.courseId = b.id and a.userId = "{0}" and a.classId = "{1}" and a.semesterId = "{2}"'
+        sql_format = sql.format(self.__params['userId'], self.__params['classId'], self.__params['semesterId'])
+        result = self.__cursor.execute(sql_format)
+        data = {}
+        teacher_class_course = []
+        for row in result:
+            line_data = {}
+            line_data['courseId'] = row[0]
+            line_data['courseName'] = row[1]
+            teacher_class_course.append(line_data)
+        data['result'] = teacher_class_course
+        return data
