@@ -177,6 +177,21 @@ class SelectData(object):
         data['result'] = user_list
         return data
 
+    def select_teacher_class(self):
+        sql = 'select distinct a.classId, b.describe className from courseTable a, class b '\
+              'where a.classId = b.id and a.userId = "{0}" and a.semesterId = "{1}"'
+        sql_format = sql.format(self.__params['userId'], self.__params['semesterId'])
+        result = self.__cursor.execute(sql_format)
+        data = {}
+        teacher_class = []
+        for row in result:
+            line_data = {}
+            line_data['classId'] = row[0]
+            line_data['className'] = row[1]
+            teacher_class.append(line_data)
+        data['result'] = teacher_class
+        return data
+
     def select_student_grade(self):
         sql = 'select c.describe courseName, g.grade from grade g, course c '\
               'where g.userId = "{0}" and g.courseId = c.id and g.semesterId = "{1}"'
