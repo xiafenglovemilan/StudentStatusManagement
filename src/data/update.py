@@ -38,7 +38,7 @@ class UpdateData(object):
     def update_student_grade(self):
         sql = 'update grade set grade = "{0}" where userId = "{1}" and courseId = "{2}" and semesterId = "{3}"'
         for row in self.__params:
-            sql_format = sql.format(self.__params['grade'], self.__params['userId'], self.__params['courseId'], self.__params['semesterId'])
+            sql_format = sql.format(row['grade'], row['userId'], row['courseId'], row['semesterId'])
             result = self.__cursor.execute(sql_format)
             self.__conn.commit()
             if result.rowcount <= 0:
