@@ -278,7 +278,7 @@ async def get_course_grade(request):
     return web.json_response(result)
 
 @routes.post('/get/teacher_class_course')
-async def get_course_grade(request):
+async def get_teacher_class_course(request):
     session = await get_session(request)
     session_name = session['userId'] if 'userId' in session else None
     data = await request.json()
