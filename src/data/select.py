@@ -46,9 +46,11 @@ class SelectData(object):
         return data
 
     def select_user_info(self):
-        sql = 'select userId, name, formerName, idNo, typeId, sex, age, classId, birthday, ' \
-              'national, nativePlace, politicalLandscape, admissionDate, mail, schoolYear, memo ' \
-              'from user where userId = "%s" ' % self.__params
+        sql = 'select userId, name, formerName, idNo, typeId, sex, age, classId, c.describe className, '\
+              'c.professId, p.describe professName, p.departId, d.describe departName, birthday, national, '\
+              'nativePlace, politicalLandscape, admissionDate, mail, schoolYear, memo '\
+              'from user u inner join class c inner join professional p inner join departments d '\
+              'on u.classId = c.id and c.professId = p.id and p.departId = d.id and userId = "{0}"'.format(self.__params)
         result = self.__cursor.execute(sql)
         user_info = {}
         for row in result:
@@ -60,14 +62,19 @@ class SelectData(object):
             user_info['sex'] = row[5]
             user_info['age'] = row[6]
             user_info['classId'] = row[7]
-            user_info['birthday'] = row[8]
-            user_info['national'] = row[9]
-            user_info['nativePlace'] = row[10]
-            user_info['politicalLandscape'] = row[11]
-            user_info['admissionDate'] = row[12]
-            user_info['mail'] = row[13]
-            user_info['schoolYear'] = row[14]
-            user_info['memo'] = row[15]
+            user_info['className'] = row[8]
+            user_info['professId'] = row[9]
+            user_info['professName'] = row[10]
+            user_info['departId'] = row[11]
+            user_info['departName'] = row[12]
+            user_info['birthday'] = row[13]
+            user_info['national'] = row[14]
+            user_info['nativePlace'] = row[15]
+            user_info['politicalLandscape'] = row[16]
+            user_info['admissionDate'] = row[17]
+            user_info['mail'] = row[18]
+            user_info['schoolYear'] = row[19]
+            user_info['memo'] = row[20]
         return user_info
 
     def select_user_type(self):
