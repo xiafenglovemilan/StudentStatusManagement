@@ -210,8 +210,9 @@ class SelectData(object):
         student_grade = []
         for row in result:
             line_data = {}
-            line_data['courseName'] = row[0]
-            line_data['grade'] = row[1]
+            line_data['courseId'] = row[0]
+            line_data['courseName'] = row[1]
+            line_data['grade'] = row[2]
             student_grade.append(line_data)
         data['result'] = student_grade
         return data
