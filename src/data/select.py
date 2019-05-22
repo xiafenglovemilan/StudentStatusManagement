@@ -193,7 +193,7 @@ class SelectData(object):
         return data
 
     def select_student_grade(self):
-        sql = 'select c.courseName, g.grade from '\
+        sql = 'select c.courseId, c.courseName, g.grade from '\
               '(select distinct u.userId, ct.courseId, c.describe courseName from user u, courseTable ct, course c '\
               'where u.userId = "{0}" and u.classId = ct.classId and ct.courseId = c.id) c '\
               'left join (select * from grade where userId = "{1}" and semesterId = "{2}") g on g.courseId = c.courseId'
