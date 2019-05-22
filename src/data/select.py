@@ -193,9 +193,11 @@ class SelectData(object):
         return data
 
     def select_student_grade(self):
-        sql = 'select c.describe courseName, g.grade from grade g, course c '\
-              'where g.userId = "{0}" and g.courseId = c.id and g.semesterId = "{1}"'
-        sql_format = sql.format(self.__params['userId'], self.__params['semesterId'])
+        sql = 'select c.courseName, g.grade from '\
+              '(select distinct u.userId, ct.courseId, c.describe courseName from user u, courseTable ct, course c '\
+              'where u.userId = "{0}" and u.classId = ct.classId and ct.courseId = c.id) c '\
+              'left join (select * from grade where userId = "{1}" and semesterId = "{2}") g on g.courseId = c.courseId'
+        sql_format = sql.format(self.__params['userId'], self.__params['userId'], self.__params['semesterId'])
         result = self.__cursor.execute(sql_format)
         data = {}
         student_grade = []
