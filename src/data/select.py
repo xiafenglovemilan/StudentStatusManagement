@@ -49,8 +49,10 @@ class SelectData(object):
         sql = 'select userId, name, formerName, idNo, typeId, sex, age, classId, c.describe className, '\
               'c.professId, p.describe professName, p.departId, d.describe departName, birthday, national, '\
               'nativePlace, politicalLandscape, admissionDate, mail, schoolYear, memo '\
-              'from user u inner join class c inner join professional p inner join departments d '\
-              'on u.classId = c.id and c.professId = p.id and p.departId = d.id and userId = "{0}"'.format(self.__params)
+              'from user u left join class c on u.classId = c.id '\
+              'left join professional p on c.professId = p.id '\
+              'left join departments d on p.departId = d.id '\
+              'where userId = "{0}"'.format(self.__params)
         result = self.__cursor.execute(sql)
         user_info = {}
         for row in result:
