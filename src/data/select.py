@@ -150,7 +150,7 @@ class SelectData(object):
         return data
 
     def select_course_table(self):
-        sql = 'select a.classTimeId, a.userId, b.name, a.courseId, c.describe courseName'\
+        sql = 'select a.classTimeId, a.userId, b.name, a.courseId, c.describe courseName '\
               'from (select * from courseTable where classId = {0} and semesterId = {1}) a '\
               'inner join user b inner join course c on a.userId = b.userId and a.courseId = c.id'
         sql_format = sql.format(self.__params['classId'], self.__params['semesterId'])
