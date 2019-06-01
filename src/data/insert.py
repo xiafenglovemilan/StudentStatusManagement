@@ -78,6 +78,14 @@ class InsertData(object):
         else:
             return False
 
+    def add_semester(self):
+        sql = 'insert into semester (describe) values ("{0}")'.format(self.__params['describe'])
+        result = self.__cursor.execute(sql)
+        if result.rowcount > 0:
+            return True
+        else:
+            return False
+
     def add_student_grade(self):
         sql = 'insert into grade(userId, courseId, grade, semesterId) values ("{0}", "{1}", "{2}", "{3}")'
         for row in self.__params:
